@@ -1,12 +1,12 @@
-# iPhone 16 Pro Max 512GB - ãƒ–ãƒ©ãƒƒã‚¯ãƒã‚¿ãƒ‹ã‚¦ãƒ åœ¨åº«ãƒã‚§ãƒƒã‚«ãƒ¼å®Ÿè¡Œã‚¹ã‚¯ãƒªãƒ—ãƒˆ
+# iPhone 16 Pro Max 512GB - ƒuƒ‰ƒbƒNƒ`ƒ^ƒjƒEƒ€ÝŒÉƒ`ƒFƒbƒJ[ŽÀsƒXƒNƒŠƒvƒg
 
-# ã‚¨ãƒ©ãƒ¼æ™‚ã®å‹•ä½œè¨­å®š
-$ErrorActionPreference = "Continue"
+# ƒGƒ‰[Žž‚Ì“®ìÝ’è
+$ErrorActionPreference = "Stop"
 
-# ãƒ­ã‚°ãƒ•ã‚¡ã‚¤ãƒ«ã®ãƒ‘ã‚¹
+# ƒƒOƒtƒ@ƒCƒ‹‚ÌƒpƒX
 $logFile = Join-Path $PSScriptRoot "checker_log.txt"
 
-# ãƒ­ã‚°é–¢æ•°
+# ƒƒOŠÖ”
 function Write-Log {
     param([string]$Message)
     $timestamp = Get-Date -Format "yyyy-MM-dd HH:mm:ss"
@@ -15,60 +15,77 @@ function Write-Log {
     Add-Content -Path $logFile -Value $logMessage
 }
 
-# ãƒ¡ã‚¤ãƒ³å‡¦ç†
 try {
-    Write-Log "=== iPhone 16 Pro Max 512GB - ãƒ–ãƒ©ãƒƒã‚¯ãƒã‚¿ãƒ‹ã‚¦ãƒ åœ¨åº«ãƒã‚§ãƒƒã‚«ãƒ¼é–‹å§‹ ==="
-    
-    # ç¾åœ¨ã®ãƒ‡ã‚£ãƒ¬ã‚¯ãƒˆãƒªã‚’ã‚¹ã‚¯ãƒªãƒ—ãƒˆã®ãƒ‡ã‚£ãƒ¬ã‚¯ãƒˆãƒªã«å¤‰æ›´
-    Set-Location $PSScriptRoot
-    Write-Log "ä½œæ¥­ãƒ‡ã‚£ãƒ¬ã‚¯ãƒˆãƒª: $PWD"
-    
-    # Pythonã®å­˜åœ¨ç¢ºèª
+    Write-Log "=== iPhone 16 Pro Max 512GB - ƒuƒ‰ƒbƒNƒ`ƒ^ƒjƒEƒ€ÝŒÉƒ`ƒFƒbƒJ[ŠJŽn ==="
+
+    # ì‹ÆƒfƒBƒŒƒNƒgƒŠ‚ðƒXƒNƒŠƒvƒg‚ÌêŠ‚Ö
+    Set-Location -Path $PSScriptRoot
+    Write-Log "ì‹ÆƒfƒBƒŒƒNƒgƒŠ: $PWD"
+
+    # Python ‚Ì‘¶ÝŠm”F
+    Write-Log "PythonŠm”F’†..."
     try {
-        $pythonVersion = python --version 2>&1
+        # py ƒRƒ}ƒ“ƒh‚ðŽŽ‚·iWindows Python Launcherj
+        $pythonVersion = & py --version 2>&1
         if ($LASTEXITCODE -eq 0) {
-            Write-Log "Pythonç¢ºèª: $pythonVersion"
-        }
-        else {
-            throw "Pythonã‚³ãƒžãƒ³ãƒ‰ã®å®Ÿè¡Œã«å¤±æ•—ã—ã¾ã—ãŸ"
+            Write-Log "PythonŠm”F: $pythonVersion (py ƒRƒ}ƒ“ƒh)"
+            $pythonCmd = "py"
+        } else {
+            # python ƒRƒ}ƒ“ƒh‚ðŽŽ‚·
+            $pythonVersion = & python --version 2>&1
+            if ($LASTEXITCODE -eq 0) {
+                Write-Log "PythonŠm”F: $pythonVersion (python ƒRƒ}ƒ“ƒh)"
+                $pythonCmd = "python"
+            } else {
+                throw "Python‚ªŒ©‚Â‚©‚è‚Ü‚¹‚ñBPython‚ðƒCƒ“ƒXƒg[ƒ‹‚µ‚Ä‚­‚¾‚³‚¢B"
+            }
         }
     }
     catch {
-        Write-Log "ã‚¨ãƒ©ãƒ¼: PythonãŒè¦‹ã¤ã‹ã‚Šã¾ã›ã‚“ã€‚Pythonã‚’ã‚¤ãƒ³ã‚¹ãƒˆãƒ¼ãƒ«ã—ã¦ãã ã•ã„ã€‚"
-        exit 1
+        Write-Log "PythonŠm”FƒGƒ‰[: $($_.Exception.Message)"
+        throw "Python‚ªŒ©‚Â‚©‚è‚Ü‚¹‚ñBPython‚ðƒCƒ“ƒXƒg[ƒ‹‚µ‚Ä‚­‚¾‚³‚¢B"
     }
-    
-    # å¿…è¦ãªãƒ©ã‚¤ãƒ–ãƒ©ãƒªã®ã‚¤ãƒ³ã‚¹ãƒˆãƒ¼ãƒ«ç¢ºèª
-    Write-Log "ä¾å­˜é–¢ä¿‚ã‚’ç¢ºèªä¸­..."
+
+    # ˆË‘¶ŠÖŒW‚ÌŠm”F
+    Write-Log "ˆË‘¶ŠÖŒW‚ðŠm”F’†..."
     try {
-        python -c "import requests, bs4" 2>$null
+        & $pythonCmd -c "import requests, bs4; print('OK')" 2>&1 | Out-Null
         if ($LASTEXITCODE -ne 0) {
-            Write-Log "å¿…è¦ãªãƒ©ã‚¤ãƒ–ãƒ©ãƒªã‚’ã‚¤ãƒ³ã‚¹ãƒˆãƒ¼ãƒ«ä¸­..."
-            pip install -r requirements.txt
+            Write-Log "•K—v‚Èƒ‰ƒCƒuƒ‰ƒŠ‚ðƒCƒ“ƒXƒg[ƒ‹’†..."
+            & $pythonCmd -m pip install -r requirements.txt
+            if ($LASTEXITCODE -ne 0) {
+                throw "ˆË‘¶ŠÖŒW‚ÌƒCƒ“ƒXƒg[ƒ‹‚ÉŽ¸”s‚µ‚Ü‚µ‚½B"
+            }
+            Write-Log "ˆË‘¶ŠÖŒW‚ÌƒCƒ“ƒXƒg[ƒ‹Š®—¹"
+        } else {
+            Write-Log "ˆË‘¶ŠÖŒW‚ÌŠm”FŠ®—¹"
         }
-        Write-Log "ä¾å­˜é–¢ä¿‚ã®ç¢ºèªå®Œäº†"
     }
     catch {
-        Write-Log "ã‚¨ãƒ©ãƒ¼: ä¾å­˜é–¢ä¿‚ã®ã‚¤ãƒ³ã‚¹ãƒˆãƒ¼ãƒ«ã«å¤±æ•—ã—ã¾ã—ãŸã€‚"
-        exit 1
+        Write-Log "ˆË‘¶ŠÖŒWŠm”FƒGƒ‰[: $($_.Exception.Message)"
+        throw "ˆË‘¶ŠÖŒW‚ÌŠm”F‚ÉŽ¸”s‚µ‚Ü‚µ‚½B"
     }
-    
-    # ãƒ¡ã‚¤ãƒ³ã‚¹ã‚¯ãƒªãƒ—ãƒˆã®å®Ÿè¡Œ
-    Write-Log "åœ¨åº«ãƒã‚§ãƒƒã‚«ãƒ¼ã‚’å®Ÿè¡Œä¸­..."
-    python apple_iphone_checker.py
-    
-    if ($LASTEXITCODE -eq 0) {
-        Write-Log "åœ¨åº«ãƒã‚§ãƒƒã‚«ãƒ¼ã®å®Ÿè¡ŒãŒæ­£å¸¸ã«å®Œäº†ã—ã¾ã—ãŸã€‚"
+
+    # ƒƒCƒ“ƒXƒNƒŠƒvƒg‚ÌŽÀs
+    Write-Log "ÝŒÉƒ`ƒFƒbƒJ[‚ðŽÀs’†..."
+    try {
+        & $pythonCmd "apple_iphone_checker.py"
+        if ($LASTEXITCODE -ne 0) {
+            throw "ÝŒÉƒ`ƒFƒbƒJ[ŽÀs’†‚ÉƒGƒ‰[‚ª”­¶‚µ‚Ü‚µ‚½BI—¹ƒR[ƒh: $LASTEXITCODE"
+        }
+        Write-Log "ÝŒÉƒ`ƒFƒbƒJ[‚ÌŽÀs‚ª³í‚ÉŠ®—¹‚µ‚Ü‚µ‚½B"
     }
-    else {
-        Write-Log "ã‚¨ãƒ©ãƒ¼: åœ¨åº«ãƒã‚§ãƒƒã‚«ãƒ¼ã®å®Ÿè¡Œä¸­ã«ã‚¨ãƒ©ãƒ¼ãŒç™ºç”Ÿã—ã¾ã—ãŸã€‚çµ‚äº†ã‚³ãƒ¼ãƒ‰: $LASTEXITCODE"
+    catch {
+        Write-Log "ƒƒCƒ“ƒXƒNƒŠƒvƒgŽÀsƒGƒ‰[: $($_.Exception.Message)"
+        throw "ÝŒÉƒ`ƒFƒbƒJ[‚ÌŽÀs‚ÉŽ¸”s‚µ‚Ü‚µ‚½B"
     }
 }
 catch {
-    Write-Log "äºˆæœŸã—ãªã„ã‚¨ãƒ©ãƒ¼ãŒç™ºç”Ÿã—ã¾ã—ãŸ: $($_.Exception.Message)"
+    Write-Log "ƒGƒ‰[‚ª”­¶‚µ‚Ü‚µ‚½: $($_.Exception.Message)"
+    Write-Log "ƒGƒ‰[‚ÌÚ×: $($_.Exception.ToString())"
     exit 1
 }
 finally {
-    Write-Log "=== iPhone 16 Pro Max 512GB - ãƒ–ãƒ©ãƒƒã‚¯ãƒã‚¿ãƒ‹ã‚¦ãƒ åœ¨åº«ãƒã‚§ãƒƒã‚«ãƒ¼çµ‚äº† ==="
+    Write-Log "=== iPhone 16 Pro Max 512GB - ƒuƒ‰ƒbƒNƒ`ƒ^ƒjƒEƒ€ÝŒÉƒ`ƒFƒbƒJ[I—¹ ==="
     Write-Log ""
 }
