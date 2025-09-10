@@ -4,7 +4,11 @@ import re
 import json
 import os
 from datetime import datetime
+import sys
+import traceback
+from error_handler import log_error, handle_network_error, handle_file_error, safe_execute, check_environment, create_error_report
 
+@handle_network_error
 def send_discord_notification(webhook_url, message):
     """
     Discordに通知を送信
@@ -15,12 +19,17 @@ def send_discord_notification(webhook_url, message):
             "username": "iPhone Checker Bot"
         }
         
-        response = requests.post(webhook_url, json=data)
+        response = requests.post(webhook_url, json=data, timeout=10)
         response.raise_for_status()
-        print("Discord通知を送信しました")
+        print("✅ Discord通知を送信しました")
         return True
+    except requests.exceptions.RequestException as e:
+        log_error(e, "Discord通知の送信")
+        print(f"❌ Discord通知の送信に失敗しました: {e}")
+        return False
     except Exception as e:
-        print(f"Discord通知の送信に失敗しました: {e}")
+        log_error(e, "Discord通知の送信（予期しないエラー）")
+        print(f"❌ Discord通知の送信に失敗しました: {e}")
         return False
 
 def check_iphone_16_pro_max_black_titanium():
@@ -30,20 +39,28 @@ def check_iphone_16_pro_max_black_titanium():
     url = "https://www.apple.com/jp/shop/refurbished/iphone"
     
     try:
+        # 環境チェック
+        if not check_environment():
+            print("❌ 環境チェックに失敗しました")
+            return [], []
+        
         # ヘッダーを設定してリクエストを送信
         headers = {
             'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36'
         }
         
-        print(f"サイトにアクセス中: {url}")
-        response = requests.get(url, headers=headers, timeout=10)
+        print(f"🔍 サイトにアクセス中: {url}")
+        response = requests.get(url, headers=headers, timeout=30)
         response.raise_for_status()
+        
+        print(f"✅ サイトアクセス成功 (ステータス: {response.status_code})")
         
         # HTMLをパース
         soup = BeautifulSoup(response.content, 'html.parser')
         
         # ページのテキスト全体を取得
         page_text = soup.get_text()
+        print(f"📄 ページテキスト取得完了 ({len(page_text)} 文字)")
         
         # iPhone 16 Pro Max 512GB - ブラックチタニウムのキーワードを検索
         keywords = [
@@ -121,21 +138,48 @@ def check_iphone_16_pro_max_black_titanium():
         return found_keywords, iphone_models
         
     except requests.exceptions.RequestException as e:
-        print(f"リクエストエラー: {e}")
+        log_error(e, "HTTPリクエストエラー")
+        print(f"❌ リクエストエラー: {e}")
+        return [], []
+    except requests.exceptions.Timeout as e:
+        log_error(e, "タイムアウトエラー")
+        print(f"❌ タイムアウトエラー: {e}")
+        return [], []
+    except requests.exceptions.ConnectionError as e:
+        log_error(e, "接続エラー")
+        print(f"❌ 接続エラー: {e}")
         return [], []
     except Exception as e:
-        print(f"エラーが発生しました: {e}")
+        log_error(e, "予期しないエラー")
+        print(f"❌ エラーが発生しました: {e}")
+        # エラーレポートを作成
+        error_report = create_error_report(e, "iPhone在庫チェッカー")
+        print("📋 エラーレポート:")
+        print(error_report)
         return [], []
 
 if __name__ == "__main__":
-    print("Apple整備済みiPhoneサイトでiPhone 16 Pro Max 512GB - ブラックチタニウムを検索中...")
-    results, models = check_iphone_16_pro_max_black_titanium()
-    
-    if results:
-        print(f"\n検索完了: {len(results)}個のキーワードが見つかりました")
-    else:
-        print("\n検索完了: iPhone 16 Pro Max 512GB - ブラックチタニウムは見つかりませんでした")
-    
-    if models:
-        print(f"利用可能なiPhone Pro Maxモデル: {len(set(models))}種類")
+    try:
+        print("🚀 Apple整備済みiPhoneサイトでiPhone 16 Pro Max 512GB - ブラックチタニウムを検索中...")
+        results, models = check_iphone_16_pro_max_black_titanium()
+        
+        if results:
+            print(f"\n✅ 検索完了: {len(results)}個のキーワードが見つかりました")
+            for keyword in results:
+                print(f"   • {keyword}")
+        else:
+            print("\n❌ 検索完了: iPhone 16 Pro Max 512GB - ブラックチタニウムは見つかりませんでした")
+        
+        if models:
+            unique_models = list(set(models))
+            print(f"\n📱 利用可能なiPhone Pro Maxモデル: {len(unique_models)}種類")
+            for model in unique_models:
+                print(f"   • {model}")
+        else:
+            print("\n📱 利用可能なiPhone Pro Maxモデル: 見つかりませんでした")
+            
+    except Exception as e:
+        log_error(e, "メイン処理")
+        print(f"❌ メイン処理でエラーが発生しました: {e}")
+        sys.exit(1)
 

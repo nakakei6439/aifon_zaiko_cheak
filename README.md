@@ -6,6 +6,7 @@ Apple整備済みiPhoneサイトからiPhone 16 Pro Max 512GB - ブラックチ�
 
 - ✅ Apple整備済みiPhoneサイトをスクレイピング
 - ✅ iPhone 16 Pro Max 512GB - ブラックチタニウムの在庫チェック
+
 - ✅ 利用可能なiPhone Pro Maxモデル一覧の取得
 - ✅ Discord通知機能（Webhook URL設定済み）
 - ✅ 価格情報の表示
