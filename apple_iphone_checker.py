@@ -48,10 +48,10 @@ def check_iphone_16_pro_max_black_titanium():
         # iPhone 16 Pro Max 512GB - ブラックチタニウムのキーワードを検索
         keywords = [
             "iPhone 16 Pro Max 512GB - ブラックチタニウム",
+            "iPhone 16 Pro Max 256GB - ブラックチタニウム",
             "iPhone 16 Pro Max 512GB",
-            "iPhone 16 Pro Max",
-            "ブラックチタニウム",
-            "16 Pro Max 512GB"
+            "iPhone 16 Pro Max 256GB",
+            "iPhone 16 Pro Max"
         ]
         
         print("\n=== 検索結果 ===")

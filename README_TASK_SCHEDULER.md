@@ -30,9 +30,26 @@ task_manager.bat
 ### 4. ログファイル
 実行結果は `checker_log.txt` に記録されます
 
+## 実行頻度オプション
+
+- **1分ごと** - 最高頻度監視（リアルタイム）
+- **15分ごと** - 高頻度監視
+- **30分ごと** - 標準監視（デフォルト）
+- **1時間ごと** - 通常監視
+- **2時間ごと** - 低頻度監視
+- **6時間ごと** - 定期監視
+- **12時間ごと** - 日2回監視
+- **1日ごと** - 日次監視
+- **週次** - 週次監視
+
 ## タスクスケジューラーの詳細設定
 
 ### 実行頻度の変更
+
+**1分ごとに実行:**
+```cmd
+schtasks /create /tn "iPhone16ProMaxChecker" /tr "powershell.exe -ExecutionPolicy Bypass -File \"%CD%\run_checker.ps1\"" /sc minute /mo 1 /f
+```
 
 **15分ごとに実行:**
 ```cmd
@@ -121,6 +138,12 @@ schtasks /change /tn "iPhone16ProMaxChecker" /enable
 - **タスクが実行されない**: タスクスケジューラーでタスクの状態を確認してください
 
 ## 簡単な設定方法
+
+### 1分ごとに実行する場合：
+```cmd
+schtasks /delete /tn "iPhone16ProMaxChecker" /f
+schtasks /create /tn "iPhone16ProMaxChecker" /tr "powershell.exe -ExecutionPolicy Bypass -File \"%CD%\run_checker.ps1\"" /sc minute /mo 1 /f
+```
 
 ### 1時間ごとに実行する場合：
 ```cmd

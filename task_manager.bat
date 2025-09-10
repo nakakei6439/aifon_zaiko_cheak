@@ -73,24 +73,26 @@ goto menu
 :change_frequency
 echo.
 echo 実行頻度を選択してください:
-echo 1. 15分ごと
-echo 2. 30分ごと
-echo 3. 1時間ごと
-echo 4. 2時間ごと
-echo 5. 6時間ごと
-echo 6. 12時間ごと
-echo 7. 1日ごと
+echo 1. 1分ごと
+echo 2. 15分ごと
+echo 3. 30分ごと
+echo 4. 1時間ごと
+echo 5. 2時間ごと
+echo 6. 6時間ごと
+echo 7. 12時間ごと
+echo 8. 1日ごと
 echo.
 
-set /p freq_choice="選択 (1-7): "
+set /p freq_choice="選択 (1-8): "
 
-if "%freq_choice%"=="1" set freq=15
-if "%freq_choice%"=="2" set freq=30
-if "%freq_choice%"=="3" set freq=60
-if "%freq_choice%"=="4" set freq=120
-if "%freq_choice%"=="5" set freq=360
-if "%freq_choice%"=="6" set freq=720
-if "%freq_choice%"=="7" goto daily_task
+if "%freq_choice%"=="1" set freq=1
+if "%freq_choice%"=="2" set freq=15
+if "%freq_choice%"=="3" set freq=30
+if "%freq_choice%"=="4" set freq=60
+if "%freq_choice%"=="5" set freq=120
+if "%freq_choice%"=="6" set freq=360
+if "%freq_choice%"=="7" set freq=720
+if "%freq_choice%"=="8" goto daily_task
 
 echo.
 echo 既存のタスクを削除中...
