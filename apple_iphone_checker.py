@@ -23,9 +23,9 @@ def send_discord_notification(webhook_url, message):
         print(f"Discord通知の送信に失敗しました: {e}")
         return False
 
-def check_iphone_15_pro_max_black_titanium():
+def check_iphone_16_pro_max_black_titanium():
     """
-    Apple整備済みiPhoneサイトからiPhone 15 Pro Max 512GB - ブラックチタニウムのキーワードを検索
+    Apple整備済みiPhoneサイトからiPhone 16 Pro Max 512GB - ブラックチタニウムのキーワードを検索
     """
     url = "https://www.apple.com/jp/shop/refurbished/iphone"
     
@@ -45,13 +45,13 @@ def check_iphone_15_pro_max_black_titanium():
         # ページのテキスト全体を取得
         page_text = soup.get_text()
         
-        # iPhone 15 Pro Max 512GB - ブラックチタニウムのキーワードを検索
+        # iPhone 16 Pro Max 512GB - ブラックチタニウムのキーワードを検索
         keywords = [
-            "iPhone 15 Pro Max 512GB - ブラックチタニウム",
-            "iPhone 15 Pro Max 512GB",
-            "iPhone 15 Pro Max",
+            "iPhone 16 Pro Max 512GB - ブラックチタニウム",
+            "iPhone 16 Pro Max 512GB",
+            "iPhone 16 Pro Max",
             "ブラックチタニウム",
-            "15 Pro Max 512GB"
+            "16 Pro Max 512GB"
         ]
         
         print("\n=== 検索結果 ===")
@@ -66,8 +66,8 @@ def check_iphone_15_pro_max_black_titanium():
         
         # より詳細な検索 - 正規表現を使用
         print("\n=== 詳細検索 ===")
-        iphone_15_pattern = r'iPhone\s*15[^0-9]*Pro\s*Max[^0-9]*512GB[^0-9]*ブラックチタニウム'
-        matches = re.findall(iphone_15_pattern, page_text, re.IGNORECASE)
+        iphone_16_pattern = r'iPhone\s*16[^0-9]*Pro\s*Max[^0-9]*512GB[^0-9]*ブラックチタニウム'
+        matches = re.findall(iphone_16_pattern, page_text, re.IGNORECASE)
         
         if matches:
             print(f"正規表現で見つかったマッチ: {matches}")
@@ -97,13 +97,13 @@ def check_iphone_15_pro_max_black_titanium():
             else:
                 discord_message += "❌ iPhone Pro Maxモデルは見つかりませんでした\n"
             
-            # iPhone 15 Pro Max 512GB - ブラックチタニウムの検索結果を追加
+            # iPhone 16 Pro Max 512GB - ブラックチタニウムの検索結果を追加
             if found_keywords:
-                discord_message += f"\n✅ **iPhone 15 Pro Max 512GB - ブラックチタニウム関連キーワード発見:**\n"
+                discord_message += f"\n✅ **iPhone 16 Pro Max 512GB - ブラックチタニウム関連キーワード発見:**\n"
                 for keyword in found_keywords:
                     discord_message += f"• {keyword}\n"
             else:
-                discord_message += f"\n❌ **iPhone 15 Pro Max 512GB - ブラックチタニウムは見つかりませんでした**\n"
+                discord_message += f"\n❌ **iPhone 16 Pro Max 512GB - ブラックチタニウムは見つかりませんでした**\n"
             
             discord_message += f"\n🔗 サイト: {url}"
             
@@ -114,9 +114,9 @@ def check_iphone_15_pro_max_black_titanium():
         # 結果の要約
         print(f"\n=== 要約 ===")
         if found_keywords:
-            print(f"iPhone 15 Pro Max 512GB - ブラックチタニウムに関連するキーワードが {len(found_keywords)} 個見つかりました")
+            print(f"iPhone 16 Pro Max 512GB - ブラックチタニウムに関連するキーワードが {len(found_keywords)} 個見つかりました")
         else:
-            print("iPhone 15 Pro Max 512GB - ブラックチタニウムに関連するキーワードは見つかりませんでした")
+            print("iPhone 16 Pro Max 512GB - ブラックチタニウムに関連するキーワードは見つかりませんでした")
             
         return found_keywords, iphone_models
         
@@ -128,13 +128,13 @@ def check_iphone_15_pro_max_black_titanium():
         return [], []
 
 if __name__ == "__main__":
-    print("Apple整備済みiPhoneサイトでiPhone 15 Pro Max 512GB - ブラックチタニウムを検索中...")
-    results, models = check_iphone_15_pro_max_black_titanium()
+    print("Apple整備済みiPhoneサイトでiPhone 16 Pro Max 512GB - ブラックチタニウムを検索中...")
+    results, models = check_iphone_16_pro_max_black_titanium()
     
     if results:
         print(f"\n検索完了: {len(results)}個のキーワードが見つかりました")
     else:
-        print("\n検索完了: iPhone 15 Pro Max 512GB - ブラックチタニウムは見つかりませんでした")
+        print("\n検索完了: iPhone 16 Pro Max 512GB - ブラックチタニウムは見つかりませんでした")
     
     if models:
         print(f"利用可能なiPhone Pro Maxモデル: {len(set(models))}種類")

@@ -5,10 +5,10 @@ Discord通知付きiPhoneチェッカー実行スクリプト
 
 import os
 import sys
-from apple_iphone_checker import check_iphone_15_pro_max_black_titanium
+from apple_iphone_checker import check_iphone_16_pro_max_black_titanium
 
 def main():
-    print("🔍 Apple整備済みiPhoneサイトでiPhone 15 Pro Max 512GB - ブラックチタニウムを検索中...")
+    print("🔍 Apple整備済みiPhoneサイトでiPhone 16 Pro Max 512GB - ブラックチタニウムを検索中...")
     print("📱 検索結果はDiscordに通知されます\n")
     
     # Discord Webhook URLの確認
@@ -21,18 +21,18 @@ def main():
     
         # iPhone検索を実行
         try:
-            results, models = check_iphone_15_pro_max_black_titanium()
+            results, models = check_iphone_16_pro_max_black_titanium()
         
         print("\n" + "="*50)
         print("📊 検索結果サマリー")
         print("="*50)
         
         if results:
-            print(f"✅ iPhone 15 Pro Max 512GB - ブラックチタニウム関連キーワード: {len(results)}個発見")
+            print(f"✅ iPhone 16 Pro Max 512GB - ブラックチタニウム関連キーワード: {len(results)}個発見")
             for keyword in results:
                 print(f"   • {keyword}")
         else:
-            print("❌ iPhone 15 Pro Max 512GB - ブラックチタニウム関連キーワード: 見つかりませんでした")
+            print("❌ iPhone 16 Pro Max 512GB - ブラックチタニウム関連キーワード: 見つかりませんでした")
         
         if models:
             unique_models = list(set(models))
