@@ -1,0 +1,17 @@
+# Discord Webhook設定
+# DiscordサーバーでWebhookを作成し、URLを環境変数として設定してください
+
+# Windows PowerShellの場合:
+# $env:DISCORD_WEBHOOK_URL="https://discord.com/api/webhooks/1234567890/abcdefghijklmnopqrstuvwxyz"
+
+# Windows コマンドプロンプトの場合:
+# set DISCORD_WEBHOOK_URL=https://discord.com/api/webhooks/1234567890/abcdefghijklmnopqrstuvwxyz
+
+# Linux/Macの場合:
+# export DISCORD_WEBHOOK_URL="https://discord.com/api/webhooks/1234567890/abcdefghijklmnopqrstuvwxyz"
+
+# Discord Webhookの作成方法:
+# 1. Discordサーバーの設定を開く
+# 2. 統合 > Webhook を選択
+# 3. 新しいWebhookを作成
+# 4. Webhook URLをコピーして上記の環境変数に設定
