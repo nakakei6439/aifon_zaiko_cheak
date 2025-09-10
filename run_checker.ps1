@@ -12,7 +12,12 @@ function Write-Log {
     $timestamp = Get-Date -Format "yyyy-MM-dd HH:mm:ss"
     $logMessage = "[$timestamp] $Message"
     Write-Host $logMessage
-    Add-Content -Path $logFile -Value $logMessage
+    try {
+        Add-Content -Path $logFile -Value $logMessage -ErrorAction SilentlyContinue
+    }
+    catch {
+        # ログファイル書き込みに失敗した場合は無視
+    }
 }
 
 try {
